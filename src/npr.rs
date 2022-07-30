@@ -1,19 +1,15 @@
 use std::path::Path;
 use std::fs;
 use std::io;
+use filetime::{ set_file_mtime, FileTime };
 
-pub fn exists(fname: &str) -> bool {
+pub fn is_exists(fname: &str) -> bool {
     Path::new(fname).exists()
 }
 
 pub fn listdir(fname: &str) -> Result<Vec<String>, io::Error> {
     let mut v = vec![];
-    let files = fs::read_dir(fname);
-
-    let files = match files {
-        Ok(files) => files,
-        Err(err) => return Err(err)
-    };
+    let files = fs::read_dir(fname)?;
 
     for file in files {
         v.push(file.unwrap().path().file_name().unwrap()
@@ -21,4 +17,20 @@ pub fn listdir(fname: &str) -> Result<Vec<String>, io::Error> {
     }
 
     Ok(v)
+}
+
+pub fn touch(fname: &str) -> Result<bool, io::Error> {
+    if !is_exists(fname) {
+        fs::File::create(fname)?;
+        return Ok(false);
+    }
+
+    set_file_mtime(fname, FileTime::now())?;
+
+    Ok(true)
+}
+
+pub fn remove(fname: &str) -> io::Result<()> {
+    fs::remove_file(fname)?;
+    Ok(())
 }
