@@ -16,7 +16,7 @@ fn test_listdir() {
 
 fn test_touch() {
     let fname = "sample/touch/f.txt";
-    r::remove(fname).expect("failed to remove touch/f.txt");
+    r::rm(fname).expect("failed to rm touch/f.txt");
 
     let result = r::touch(fname).unwrap();
     assert_eq!(result, false);
@@ -36,7 +36,7 @@ fn test_is_dir() {
 fn test_mkdir() {
     let fname = "sample/mkdir/dir";
     if r::is_exists(fname) {
-        r::remove_dir(fname).unwrap();
+        r::rmdir(fname).unwrap();
     }
     r::mkdir(fname).unwrap();
     assert_eq!(r::is_exists(fname), true);
@@ -45,7 +45,7 @@ fn test_mkdir() {
 fn test_mkdirp() {
     let fname1 = "sample/mkdir/dirp/dirp/";
     if !r::is_exists(fname1) {
-        r::remove_dirp(fname1).unwrap();
+        r::rmdirp(fname1).unwrap();
     }
     let fname2 = "sample/mkdir/dirp/";
 

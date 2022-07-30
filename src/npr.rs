@@ -38,17 +38,17 @@ pub fn touch(fname: &str) -> Result<bool, io::Error> {
     Ok(true)
 }
 
-pub fn remove(fname: &str) -> io::Result<()> {
+pub fn rm(fname: &str) -> io::Result<()> {
     fs::remove_file(fname)?;
     Ok(())
 }
 
-pub fn remove_dir(fname: &str) -> io::Result<()> {
+pub fn rmdir(fname: &str) -> io::Result<()> {
     fs::remove_dir(fname)?;
     Ok(())
 }
 
-pub fn remove_dirp(fname: &str) -> io::Result<()> {
+pub fn rmdirp(fname: &str) -> io::Result<()> {
     fs::remove_dir_all(fname)?;
     Ok(())
 }
