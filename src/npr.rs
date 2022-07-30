@@ -1,16 +1,23 @@
-use std::path::{ Path };
+use std::path::Path;
 use std::fs;
+use std::io;
 
 pub fn exists(fname: &str) -> bool {
     Path::new(fname).exists()
 }
 
-pub fn listdir(fname: &str) -> Vec<String> {
+pub fn listdir(fname: &str) -> Result<Vec<String>, io::Error> {
     let mut v = vec![];
+    let files = fs::read_dir(fname);
 
-    for file in fs::read_dir(fname).unwrap() {
+    let files = match files {
+        Ok(files) => files,
+        Err(err) => return Err(err)
+    };
+
+    for file in files {
         v.push(file.unwrap().path().into_os_string().into_string().unwrap());
     }
 
-    v
+    Ok(v)
 }
