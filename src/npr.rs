@@ -42,3 +42,23 @@ pub fn remove(fname: &str) -> io::Result<()> {
     fs::remove_file(fname)?;
     Ok(())
 }
+
+pub fn remove_dir(fname: &str) -> io::Result<()> {
+    fs::remove_dir(fname)?;
+    Ok(())
+}
+
+pub fn remove_dirp(fname: &str) -> io::Result<()> {
+    fs::remove_dir_all(fname)?;
+    Ok(())
+}
+
+pub fn mkdir(fname: &str) -> io::Result<()> {
+    fs::create_dir(fname)?;
+    Ok(())
+}
+
+pub fn mkdirp(fname: &str) -> io::Result<()> {
+    fs::create_dir_all(fname)?;
+    Ok(())
+}

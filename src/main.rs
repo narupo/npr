@@ -33,10 +33,34 @@ fn test_is_dir() {
     assert_eq!(r::is_dir("sample"), true);
 }
 
+fn test_mkdir() {
+    let fname = "sample/mkdir/dir";
+    if r::is_exists(fname) {
+        r::remove_dir(fname).unwrap();
+    }
+    r::mkdir(fname).unwrap();
+    assert_eq!(r::is_exists(fname), true);
+}
+
+fn test_mkdirp() {
+    let fname1 = "sample/mkdir/dirp/dirp/";
+    if !r::is_exists(fname1) {
+        r::remove_dirp(fname1).unwrap();
+    }
+    let fname2 = "sample/mkdir/dirp/";
+
+    let fname3 = "sample/mkdir/dirp/dirp/";
+    r::mkdirp(fname3).unwrap();
+    assert!(r::is_exists(fname1));
+    assert!(r::is_exists(fname2));
+}
+
 fn main() {
     test_is_exists();
     test_is_file();
     test_is_dir();
     test_listdir();
     test_touch();
+    test_mkdir();
+    test_mkdirp();
 }
