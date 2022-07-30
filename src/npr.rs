@@ -16,7 +16,8 @@ pub fn listdir(fname: &str) -> Result<Vec<String>, io::Error> {
     };
 
     for file in files {
-        v.push(file.unwrap().path().into_os_string().into_string().unwrap());
+        v.push(file.unwrap().path().file_name().unwrap()
+            .to_os_string().into_string().unwrap());
     }
 
     Ok(v)
