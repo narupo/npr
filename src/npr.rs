@@ -7,6 +7,14 @@ pub fn is_exists(fname: &str) -> bool {
     Path::new(fname).exists()
 }
 
+pub fn is_file(fname: &str) -> bool {
+    Path::new(fname).is_file()
+}
+
+pub fn is_dir(fname: &str) -> bool {
+    Path::new(fname).is_dir()
+}
+
 pub fn listdir(fname: &str) -> Result<Vec<String>, io::Error> {
     let mut v = vec![];
     let files = fs::read_dir(fname)?;

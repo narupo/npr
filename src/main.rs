@@ -1,7 +1,7 @@
 mod npr;
 use npr as r;
 
-fn test_exists() {
+fn test_is_exists() {
     assert_eq!(r::is_exists("LICENSE"), true);
 }
 
@@ -25,8 +25,18 @@ fn test_touch() {
     assert_eq!(result, true);
 }
 
+fn test_is_file() {
+    assert_eq!(r::is_file("LICENSE"), true);
+}
+
+fn test_is_dir() {
+    assert_eq!(r::is_dir("sample"), true);
+}
+
 fn main() {
-    test_exists();
+    test_is_exists();
+    test_is_file();
+    test_is_dir();
     test_listdir();
     test_touch();
 }
