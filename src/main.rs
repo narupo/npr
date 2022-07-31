@@ -34,6 +34,10 @@ fn test_is_dir() {
 }
 
 fn test_mkdir() {
+    let fname = "sample/mkdir/";
+    if !r::is_exists(fname) {
+        r::mkdir(fname).unwrap();
+    }
     let fname = "sample/mkdir/dir";
     if r::is_exists(fname) {
         r::rmdir(fname).unwrap();
@@ -43,8 +47,13 @@ fn test_mkdir() {
 }
 
 fn test_mkdirp() {
-    let fname1 = "sample/mkdir/dirp/dirp/";
-    if !r::is_exists(fname1) {
+    let fname = "sample/mkdir/";
+    if !r::is_exists(fname) {
+        r::mkdir(fname).unwrap();
+    }
+
+    let fname1 = "sample/mkdir/dirp/";
+    if r::is_exists(fname1) {
         r::rmdirp(fname1).unwrap();
     }
     let fname2 = "sample/mkdir/dirp/";
