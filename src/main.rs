@@ -46,6 +46,18 @@ fn test_mkdir() {
     assert_eq!(r::is_exists(fname), true);
 }
 
+fn test_mkdirq() {
+    let fname = "sample/mkdir/";
+    r::mkdirq(fname).unwrap();
+
+    let fname = "sample/mkdir/dir";
+    if r::is_exists(fname) {
+        r::rmdir(fname).unwrap();
+    }
+    r::mkdirq(fname).unwrap();
+    assert_eq!(r::is_exists(fname), true);
+}
+
 fn test_mkdirp() {
     let fname = "sample/mkdir/";
     if !r::is_exists(fname) {
@@ -64,6 +76,47 @@ fn test_mkdirp() {
     assert!(r::is_exists(fname2));
 }
 
+fn test_mkdirpq() {
+    let fname = "sample/mkdir/";
+    if !r::is_exists(fname) {
+        r::mkdir(fname).unwrap();
+    }
+
+    let fname1 = "sample/mkdir/dirp";
+    let fname2 = "sample/mkdir/dirp/dirp/";
+    r::mkdirpq(fname2).unwrap();
+    assert!(r::is_exists(fname1));
+    assert!(r::is_exists(fname2));
+}
+
+fn test_rmdir() {
+    let fname = "sample/rmdir";
+    r::mkdirq(fname).unwrap();
+
+    r::rmdir(fname).unwrap();
+    assert!(!r::is_exists(fname));
+}
+
+fn test_rmdirq() {
+    let fname = "sample/rmdir";
+    r::rmdirq(fname).unwrap();
+    assert!(!r::is_exists(fname));
+}
+
+fn test_rmdirp() {
+    let fname = "sample/rmdirp/dir";
+    r::mkdirpq(fname).unwrap();
+
+    r::rmdirp(fname).unwrap();
+    assert!(!r::is_exists(fname));
+}
+
+fn test_rmdirpq() {
+    let fname = "sample/rmdirp/dir";
+    r::rmdirpq(fname).unwrap();
+    assert!(!r::is_exists(fname));
+}
+
 fn main() {
     test_is_exists();
     test_is_file();
@@ -71,5 +124,11 @@ fn main() {
     test_listdir();
     test_touch();
     test_mkdir();
+    test_mkdirq();
     test_mkdirp();
+    test_mkdirpq();
+    test_rmdir();
+    test_rmdirq();
+    test_rmdirp();
+    test_rmdirpq();
 }

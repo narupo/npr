@@ -48,8 +48,26 @@ pub fn rmdir(fname: &str) -> io::Result<()> {
     Ok(())
 }
 
+pub fn rmdirq(fname: &str) -> io::Result<()> {
+    if !is_exists(fname) {
+        return Ok(());
+    }
+
+    rmdir(fname)?;
+    Ok(())
+}
+
 pub fn rmdirp(fname: &str) -> io::Result<()> {
     fs::remove_dir_all(fname)?;
+    Ok(())
+}
+
+pub fn rmdirpq(fname: &str) -> io::Result<()> {
+    if !is_exists(fname) {
+        return Ok(());
+    }
+    
+    rmdirp(fname)?;
     Ok(())
 }
 
@@ -58,7 +76,25 @@ pub fn mkdir(fname: &str) -> io::Result<()> {
     Ok(())
 }
 
+pub fn mkdirq(fname: &str) -> io::Result<()> {
+    if is_exists(fname) {
+        return Ok(());
+    }
+
+    mkdir(fname)?;
+    Ok(())
+}
+
 pub fn mkdirp(fname: &str) -> io::Result<()> {
     fs::create_dir_all(fname)?;
+    Ok(())
+}
+
+pub fn mkdirpq(fname: &str) -> io::Result<()> {
+    if is_exists(fname) {
+        return Ok(());
+    }
+
+    mkdirp(fname)?;
     Ok(())
 }
